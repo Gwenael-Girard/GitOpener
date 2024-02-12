@@ -4,7 +4,7 @@ import { openProjectsCommand } from "./commands/open.js";
 import { configurePathCommand } from "./commands/config.js";
 
 import figlet from "figlet";
-import chalkAnimation from "chalk-animation";
+import chalk from "chalk";
 
 // Adding commands to the "program" object
 program.addCommand(listProjectsCommand());
@@ -16,7 +16,11 @@ program.description(
     figlet.textSync("GitOpener", {
         font: "Big",
         whitespaceBreak: false,
-    }) + "\nA tool for efficiently opening your Git projects.\n-------------------------------------------------"
+    }) 
+    + '\n'
+    + 'A tool for efficiently opening your Git projects.\n'
+    + '-------------------------------------------------\n'
+    + '                                ' + chalk.dim("By Gwenaël Girard") + '\n'
 );
 
 // Parsing command line arguments
