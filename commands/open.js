@@ -65,8 +65,6 @@ async function openProjects() {
         executeCommand(command, (error, stdout) => {
             if (error) {
                 console.error(`Error opening Visual Studio Code: ${error}`);
-            } else {
-                console.log(`Project ${project} opened successfully.`);
             }
         });
 
