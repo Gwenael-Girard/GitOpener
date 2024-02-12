@@ -5,7 +5,7 @@ import { Command } from "commander";
 import chalk from "chalk"; // For console coloring
 
 // Importing utility functions from the utils.js file
-import { getProjects, sleep, executeCommand, getConfiguredPath, promptUser, createSpinnerMessage, exitProcess } from "../utils.js";
+import utils from "../utils.js";
 
 // Function that creates and configures the "open" command to open a project
 export function openProjectsCommand() {
@@ -26,7 +26,7 @@ export function openProjectsCommand() {
 // Async function to open projects
 async function openProjects() {
     // Retrieving the configured path from the utils.js file
-    const path = getConfiguredPath();
+    const path = utils.getConfiguredPath();
 
     // Checking if the path is defined
     if (!path) {
@@ -36,10 +36,10 @@ async function openProjects() {
     }
 
     // Retrieving the list of projects
-    const projects = getProjects();
+    const projects = utils.getProjects();
 
     // Asking the user to select projects to open in Visual Studio Code
-    const selectedProjects = await promptUser({
+    const selectedProjects = await utils.promptUser({
         name: "projects",
         type: "checkbox",
         message: "Select projects to open in Visual Studio Code",
@@ -53,8 +53,8 @@ async function openProjects() {
     }
 
     // Creating a spinner to display a loading message
-    const spinner = createSpinnerMessage("Opening Visual Studio Code...").start();
-    await sleep(2000);
+    const spinner = utils.createSpinnerMessage("Opening Visual Studio Code...").start();
+    await utils.sleep(2000);
 
     // Looping through the selected projects
     selectedProjects.projects.forEach(async (project, index) => {
@@ -62,7 +62,7 @@ async function openProjects() {
         const command = `code "${path + "\\" + project}"`;
 
         // Executing the command
-        executeCommand(command, (error, stdout) => {
+        utils.executeCommand(command, (error, stdout) => {
             if (error) {
                 console.error(`Error opening Visual Studio Code: ${error}`);
             }
@@ -71,8 +71,8 @@ async function openProjects() {
         // Checking if it's the last project, then stopping the spinner and exiting the process
         if (index === selectedProjects.projects.length - 1) {
             spinner.success({ text: "Visual Studio Code opened!" });
-            await sleep(2000);
-            exitProcess(0);
+            await utils.sleep(2000);
+            utils.exitProcess(0);
         }
     });
 }

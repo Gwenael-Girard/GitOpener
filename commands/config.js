@@ -2,7 +2,7 @@
 import { Command } from "commander";
 
 // Importing the configurePath function from the utils.js file
-import { configurePath } from "../utils.js";
+import utils from "../utils.js";
 
 // Function that creates and configures the "config" command with the "-p" (or "--path") option
 export function configurePathCommand() {
@@ -16,7 +16,7 @@ export function configurePathCommand() {
         // Action function that will be called when the command is executed
         .action((cmd) => {
             // Calling the configurePath function with the specified path
-            configurePath(cmd.path);
+            utils.configurePath(cmd.path);
         });
 
     // Returning the configured instance of the command

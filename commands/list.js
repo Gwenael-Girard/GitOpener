@@ -5,7 +5,7 @@ import { Command } from "commander";
 import chalk from "chalk"; // For console coloring
 
 // Importing utility functions from the utils.js file
-import { getProjects, getConfiguredPath } from "../utils.js";
+import utils from "../utils.js";
 
 // Function that creates and configures the "list" command to list all projects
 export function listProjectsCommand() {
@@ -26,7 +26,7 @@ export function listProjectsCommand() {
 // Internal function to list projects
 function listProjects() {
     // Retrieving the configured path from the utils.js file
-    const path = getConfiguredPath();
+    const path = utils.getConfiguredPath();
 
     // Checking if the path is defined
     if (!path) {
@@ -36,7 +36,7 @@ function listProjects() {
     }
 
     // Retrieving and sorting projects from the utils.js file
-    const sortedProjects = getProjects();
+    const sortedProjects = utils.getProjects();
 
     // Displaying the projects with their index
     sortedProjects.forEach((project, index) => {
