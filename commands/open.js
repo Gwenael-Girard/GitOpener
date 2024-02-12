@@ -5,7 +5,7 @@ import { Command } from "commander";
 import chalk from "chalk"; // For console coloring
 
 // Importing utility functions from the utils.js file
-import { getProjects, sleep, executeCommand, getConfiguredPath, promptUser, createSpinnerMessage } from "../utils.js";
+import { getProjects, sleep, executeCommand, getConfiguredPath, promptUser, createSpinnerMessage, exitProcess } from "../utils.js";
 
 // Function that creates and configures the "open" command to open a project
 export function openProjectsCommand() {
