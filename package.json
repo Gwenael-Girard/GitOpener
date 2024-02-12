@@ -1,6 +1,6 @@
 {
     "name": "@gwenael-girard/gitopener",
-    "version": "1.0.8",
+    "version": "1.0.9",
     "description": "",
     "main": "index.js",
     "type": "module",
@@ -9,8 +9,7 @@
     },
     "bin": {
         "gitopener": "./index.js",
-        "gito": "./index.js",
-        "gitopen": "./index.js open"
+        "go": "./index.js"
     },
     "keywords": [],
     "author": "",
