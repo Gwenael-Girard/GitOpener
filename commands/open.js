@@ -1,78 +1,78 @@
-// Importation de la classe Command de la bibliothèque "commander"
+// Importing the Command class from the "commander" library
 import { Command } from "commander";
 
-// Importation des bibliothèques supplémentaires nécessaires
-import chalk from "chalk"; // Pour la coloration de la console
+// Importing necessary additional libraries
+import chalk from "chalk"; // For console coloring
 
-// Importation de fonctions utilitaires depuis le fichier utils.js
+// Importing utility functions from the utils.js file
 import { getProjects, sleep, executeCommand, getConfiguredPath, promptUser, createSpinnerMessage } from "../utils.js";
 
-// Fonction qui crée et configure la commande "open" pour ouvrir un projet
+// Function that creates and configures the "open" command to open a project
 export function openProjectsCommand() {
-    // Création d'une nouvelle instance de la classe Command avec le nom "open"
+    // Creating a new instance of the Command class with the name "open"
     const openCommand = new Command("open")
-        .description("Ouvre un projet")
+        .description("Open a project") // Description of the command
 
-        // Fonction action qui sera appelée lors de l'exécution de la commande
+        // Action function that will be called when the command is executed
         .action(() => {
-            // Appel de la fonction openProjects pour ouvrir les projets
+            // Calling the openProjects function to open the projects
             openProjects();
         });
 
-    // Retourne l'instance de la commande configurée
+    // Returning the configured instance of the command
     return openCommand;
 }
 
-// Fonction asynchrone pour ouvrir les projets
+// Async function to open projects
 async function openProjects() {
-    // Récupération du chemin configuré depuis le fichier utils.js
+    // Retrieving the configured path from the utils.js file
     const path = getConfiguredPath();
 
-    // Vérification si le chemin est défini
+    // Checking if the path is defined
     if (!path) {
-        console.log(chalk.red("Vous devez définir le chemin de vos projets d'abord"));
-        console.log(chalk.red("Utilisez la commande gitopener config <chemin> pour définir le chemin"));
+        console.log(chalk.red("You must set the path to your projects first"));
+        console.log(chalk.red("Use the command gitopener config <path> to set the path"));
         return;
     }
 
-    // Récupération de la liste des projets
+    // Retrieving the list of projects
     const projects = getProjects();
 
-    // Demande à l'utilisateur de sélectionner des projets à ouvrir dans Visual Studio Code
+    // Asking the user to select projects to open in Visual Studio Code
     const selectedProjects = await promptUser({
         name: "projects",
         type: "checkbox",
-        message: "Sélectionnez des projets à ouvrir dans Visual Studio Code",
+        message: "Select projects to open in Visual Studio Code",
         choices: projects,
     });
 
-    // Vérification si au moins un projet a été sélectionné
+    // Checking if at least one project has been selected
     if (selectedProjects.projects.length === 0) {
-        console.log(chalk.red("Vous devez sélectionner au moins un projet"));
+        console.log(chalk.red("You must select at least one project"));
         return;
     }
 
-    // Création d'un spinner pour afficher un message de chargement
-    const spinner = createSpinnerMessage("Ouverture de Visual Studio Code...").start();
+    // Creating a spinner to display a loading message
+    const spinner = createSpinnerMessage("Opening Visual Studio Code...").start();
     await sleep(2000);
 
-    // Boucle sur les projets sélectionnés
+    // Looping through the selected projects
     selectedProjects.projects.forEach(async (project, index) => {
-        // Construction de la commande pour ouvrir le projet avec Visual Studio Code
+        // Constructing the command to open the project with Visual Studio Code
         const command = `code "${path + "\\" + project}"`;
 
-        // Exécution de la commande
+        // Executing the command
         executeCommand(command, (error, stdout) => {
             if (error) {
-                console.error(`Erreur lors de l'ouverture de Visual Studio Code : ${error}`);
+                console.error(`Error opening Visual Studio Code: ${error}`);
             } else {
-                console.log(`Projet ${project} ouvert avec succès.`);
+                console.log(`Project ${project} opened successfully.`);
             }
         });
 
-        // Vérification si c'est le dernier projet, puis arrêt du spinner et sortie du processus
+        // Checking if it's the last project, then stopping the spinner and exiting the process
         if (index === selectedProjects.projects.length - 1) {
-            spinner.success({ text: "Visual Studio Code ouvert !" });
+            spinner.success({ text: "Visual Studio Code opened!" });
             await sleep(2000);
             exitProcess(0);
         }

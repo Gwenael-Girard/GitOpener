@@ -1,44 +1,44 @@
-// Importation de la classe Command de la bibliothèque "commander"
+// Importing the Command class from the "commander" library
 import { Command } from "commander";
 
-// Importation des bibliothèques supplémentaires nécessaires
-import chalk from "chalk"; // Pour la coloration de la console
+// Importing necessary additional libraries
+import chalk from "chalk"; // For console coloring
 
-// Importation de fonctions utilitaires depuis le fichier utils.js
+// Importing utility functions from the utils.js file
 import { getProjects, getConfiguredPath } from "../utils.js";
 
-// Fonction qui crée et configure la commande "list" pour lister tous les projets
+// Function that creates and configures the "list" command to list all projects
 export function listProjectsCommand() {
-    // Création d'une nouvelle instance de la classe Command avec le nom "list"
+    // Creating a new instance of the Command class with the name "list"
     const listCommand = new Command("list")
-        .description("Liste tous les projets")
+        .description("List all projects") // Description of the command
 
-        // Fonction action qui sera appelée lors de l'exécution de la commande
+        // Action function that will be called when the command is executed
         .action(() => {
-            // Appel de la fonction listProjects pour afficher la liste des projets
+            // Calling the listProjects function to display the list of projects
             listProjects();
         });
 
-    // Retourne l'instance de la commande configurée
+    // Returning the configured instance of the command
     return listCommand;
 }
 
-// Fonction interne pour lister les projets
+// Internal function to list projects
 function listProjects() {
-    // Récupération du chemin configuré depuis le fichier utils.js
+    // Retrieving the configured path from the utils.js file
     const path = getConfiguredPath();
 
-    // Vérification si le chemin est défini
+    // Checking if the path is defined
     if (!path) {
-        console.log(chalk.red("Vous devez définir le chemin de vos projets d'abord"));
-        console.log(chalk.red("Utilisez la commande gitopener config <chemin> pour définir le chemin"));
+        console.log(chalk.red("You must set the path to your projects first"));
+        console.log(chalk.red("Use the command gitopener config <path> to set the path"));
         return;
     }
 
-    // Récupération et tri des projets depuis le fichier utils.js
+    // Retrieving and sorting projects from the utils.js file
     const sortedProjects = getProjects();
 
-    // Affichage des projets avec leur index
+    // Displaying the projects with their index
     sortedProjects.forEach((project, index) => {
         console.log(`${chalk.dim(index + 1 + ".")} ${project}`);
     });

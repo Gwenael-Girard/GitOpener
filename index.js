@@ -1,17 +1,17 @@
 #! /usr/bin/env node
 
-// Importation de l'objet "program" de la bibliothèque "commander"
+// Importing the "program" object from the "commander" library
 import { program } from "commander";
 
-// Importation des commandes définies dans les fichiers respectifs
+// Importing commands defined in respective files
 import { listProjectsCommand } from "./commands/list.js";
 import { openProjectsCommand } from "./commands/open.js";
 import { configurePathCommand } from "./commands/config.js";
 
-// Ajout des commandes à l'objet "program"
+// Adding commands to the "program" object
 program.addCommand(listProjectsCommand());
 program.addCommand(openProjectsCommand());
 program.addCommand(configurePathCommand());
 
-// Analyse des arguments de ligne de commande
+// Parsing command line arguments
 program.parse();

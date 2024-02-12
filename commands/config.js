@@ -1,24 +1,24 @@
-// Importation de la classe Command de la bibliothèque "commander"
+// Importing the Command class from the "commander" library
 import { Command } from "commander";
 
-// Importation de la fonction configurePath depuis le fichier utils.js
+// Importing the configurePath function from the utils.js file
 import { configurePath } from "../utils.js";
 
-// Fonction qui crée et configure la commande "config" avec l'option "-p" (ou "--path")
+// Function that creates and configures the "config" command with the "-p" (or "--path") option
 export function configurePathCommand() {
-    // Création d'une nouvelle instance de la classe Command avec le nom "config"
+    // Creating a new instance of the Command class with the name "config"
     const configCommand = new Command("config")
-        .description("[REMPLACE MOI]") // Description de la commande (remplacez par votre description réelle)
+        .description("Configure the path to the projects") // Description of the command (replace with your actual description)
 
-        // Ajout de l'option "-p" (ou "--path") à la commande avec une description
-        .option("-p, --path <path>", "Spécifier le chemin d'accès au dossier contenant les projets")
+        // Adding the "-p" (or "--path") option to the command with a description
+        .option("-p, --path <path>", "Specify the path to the folder containing the projects")
 
-        // Fonction action qui sera appelée lors de l'exécution de la commande
+        // Action function that will be called when the command is executed
         .action((cmd) => {
-            // Appel de la fonction configurePath avec le chemin d'accès spécifié
+            // Calling the configurePath function with the specified path
             configurePath(cmd.path);
         });
 
-    // Retourne l'instance de la commande configurée
+    // Returning the configured instance of the command
     return configCommand;
 }
